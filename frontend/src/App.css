@@ -1,0 +1,51 @@
+.search {
+  position: fixed; /* Change to fixed to position it at the top */
+  top: 0; /* Position it at the top */
+  left: 50%; /* Center it horizontally */
+  transform: translateX(-50%); /* Center it horizontally */
+  background-color: rgba(20, 25, 31, 1);
+  /*background-color: #262A2F;*/
+  width: 100%; /* Adjust width */
+  max-width: 1676px; /* Add max-width for responsiveness */
+  height: 150px; /* Reduce height */
+  padding: 20px; /* Add padding */
+  box-sizing: border-box; /* Include padding in the width/height calculation */
+  display: flex; /* Use flexbox to align items */
+  justify-content: center; /* Center items horizontally */
+  align-items: center; /* Center items vertically */
+  flex-direction: column; /* Align items vertically */
+}
+
+.search .search-title {
+  text-align: center;
+  font-size: 36px; /* Reduce font size */
+  font-family: "Sen", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+  color: #fff; /* Set color to pearl white */
+  margin-top: 0px;
+}
+
+.search .search-bar {
+  background-color: rgba(196, 196, 196, 0.1);
+  height: 35px; /* Reduce height */
+  border-radius: 5px;
+  width: 80%; /* Adjust width */
+  max-width: 800px; /* Add max-width for responsiveness */
+  margin-top: 0px; /* Adjust margin top to fit search title */
+}
+
+.search .search-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  margin-top: 0px; /* Reduce margin top */
+  margin-left: 10px; /* Adjust margin left */
+  font-size: 18px; /* Reduce font size */
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  width: calc(100% - 20px); /* Adjust width */
+}
