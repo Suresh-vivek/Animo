@@ -1,3 +1,18 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .search {
   position: fixed; /* Change to fixed to position it at the top */
   top: 0; /* Position it at the top */
@@ -48,4 +63,151 @@
   font-weight: 400;
   font-style: normal;
   width: calc(100% - 20px); /* Adjust width */
+}
+.explore {
+  background: rgba(20, 25, 31, 1);
+  padding: 10px 30px;
+  margin-top: 150px;
+  margin-left: 60px;
+  margin-right: 150px;
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Add gap between cards */
+  width: 100%;
+}
+
+.card {
+  background-color: rgba(196, 196, 196, 0.1);
+  border: 3px solid transparent;
+  border-radius: 8px;
+  margin: 4px;
+  text-align: center;
+  width: 180px; /* Reduce width of cards */
+  height: 280px; /* Reduce height of cards */
+  max-width: 250px;
+}
+
+.card:hover {
+  border-color: rgb(23, 184, 144, 1);
+}
+h1 {
+  font-size: 2.3em;
+}
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.search {
+  position: fixed; /* Change to fixed to position it at the top */
+  top: 0; /* Position it at the top */
+  left: 50%; /* Center it horizontally */
+  transform: translateX(-50%); /* Center it horizontally */
+  background-color: rgba(20, 25, 31, 1);
+  /*background-color: #262A2F;*/
+  width: 100%; /* Adjust width */
+  max-width: 1676px; /* Add max-width for responsiveness */
+  height: 150px; /* Reduce height */
+  padding: 20px; /* Add padding */
+  box-sizing: border-box; /* Include padding in the width/height calculation */
+  display: flex; /* Use flexbox to align items */
+  justify-content: center; /* Center items horizontally */
+  align-items: center; /* Center items vertically */
+  flex-direction: column; /* Align items vertically */
+}
+
+.search .search-title {
+  text-align: center;
+  font-size: 36px; /* Reduce font size */
+  font-family: "Sen", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+  color: #fff; /* Set color to pearl white */
+  margin-top: 0px;
+}
+
+.search .search-bar {
+  background-color: rgba(196, 196, 196, 0.1);
+  height: 35px; /* Reduce height */
+  border-radius: 5px;
+  width: 80%; /* Adjust width */
+  max-width: 800px; /* Add max-width for responsiveness */
+  margin-top: 0px; /* Adjust margin top to fit search title */
+}
+
+.search .search-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  margin-top: 0px; /* Reduce margin top */
+  margin-left: 10px; /* Adjust margin left */
+  font-size: 18px; /* Reduce font size */
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  width: calc(100% - 20px); /* Adjust width */
+}
+.explore {
+  background: rgba(20, 25, 31, 1);
+  padding: 10px 30px;
+  margin-top: 150px;
+  margin-left: 60px;
+  margin-right: 150px;
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Add gap between cards */
+  width: 100%;
+}
+
+.card {
+  background-color: rgba(196, 196, 196, 0.1);
+  border: 3px solid transparent;
+  border-radius: 8px;
+  margin: 4px;
+  text-align: center;
+  width: 180px; /* Reduce width of cards */
+  height: 280px; /* Reduce height of cards */
+  max-width: 250px;
+}
+
+.card:hover {
+  border-color: #ff781f;
+}
+h1 {
+  font-size: 2.3em;
+}
+.sidebar {
+  position: fixed;
+  top: 150px; /* Adjust according to search div height */
+  left: 0;
+  width: 150px; /* Adjust width as needed */
+  height: calc(
+    100vh - 170px
+  ); /* Calculate height based on remaining viewport height */
+  background-color: rgba(20, 25, 31, 1);
+  padding: 30px 20px;
+  font-size: 24px;
+  color: white;
+}
+.info {
+  position: fixed;
+  background-color: rgba(20, 25, 31, 1);
+  height: 920px;
+  width: 358px;
+  top: 150px; /* Adjust top position based on the height of the search div */
+  left: calc(
+    50% + 450px
+  ); /* Adjust left position to position it to the right of the explore section */
 }
