@@ -4,6 +4,7 @@ import SideBar from "./components/Sidebar";
 import SearchBar from "./components/TopHeader";
 import Info from "./components/Info";
 import Carousel from "./components/Carousel";
+import ExploreAiring from "./components/ExploreAiring";
 function App() {
   return (
     <>
@@ -17,9 +18,9 @@ function App() {
       <div>
         <Carousel />
       </div>
-      {/* <div>
-        <Info />
-      </div> */}
+      <div>
+        <ExploreAiring />
+      </div>
     </>
   );
 }
