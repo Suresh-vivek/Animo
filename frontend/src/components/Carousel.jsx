@@ -70,8 +70,8 @@ function Carousel() {
             getAnimeSliceForSlide(currentSlide).map((anime, index) => (
               <Card
                 key={index}
-                image={anime.images.jpg.image_url}
-                // Assuming this is the correct path to the image URL
+                image={anime.images.jpg.large_image_url}
+                name={anime.title}
               />
             ))
           )}

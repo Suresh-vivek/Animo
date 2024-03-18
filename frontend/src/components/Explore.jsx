@@ -58,13 +58,13 @@ function Explore() {
         style={{
           display: "grid",
           gridTemplateColumns: "auto auto auto auto",
-          gap: "20px", // Add gap between cards
+          gap: "20px",
         }}
       >
         {topAnime.map((anime, index) => (
           <Card
             key={index}
-            image={anime.images.jpg.image_url}
+            image={anime.images.jpg.large_image_url}
             name={anime.title}
             onClick={() => openModal(anime)}
           />

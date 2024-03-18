@@ -42,7 +42,7 @@ function ExploreAiring() {
           fontWeight: 600,
           marginRight: "20px",
           marginBottom: "20px",
-          marginTop: "400px",
+          marginTop: "25px",
         }}
       >
         Top Airing
