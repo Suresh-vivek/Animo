@@ -50,6 +50,11 @@ function Modal({ anime, onClose }) {
         <p>Episodes: {anime.episodes}</p>
         <p>Type: {anime.type}</p>
         <p>Score: {anime.score}</p>
+        <ul>
+          {anime.genres.map((genre, index) => (
+            <li key={index}>{genre.name}</li>
+          ))}
+        </ul>
       </div>
     </div>
   );

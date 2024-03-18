@@ -34,7 +34,7 @@ function ExploreAiring() {
   return (
     <div
       className='explore'
-      style={{ overflowX: "hidden", overflowY: "auto", marginTop: "50px" }}
+      style={{ overflowX: "hidden", overflowY: "auto", marginTop: "500px" }}
     >
       <h1
         style={{
@@ -52,7 +52,7 @@ function ExploreAiring() {
         style={{
           display: "grid",
           gridTemplateColumns: "auto auto auto auto",
-          gap: "20px", // Add gap between cards
+          gap: "20px",
         }}
       >
         {loading ? (

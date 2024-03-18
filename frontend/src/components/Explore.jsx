@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Card from "./Card";
+import Modal from "./Modal";
 
 function Explore() {
   const [topAnime, setTopAnime] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedAnime, setSelectedAnime] = useState(null);
+
+  const openModal = (anime) => {
+    setSelectedAnime(anime);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -12,7 +23,6 @@ function Explore() {
         if (cachedData) {
           setTopAnime(JSON.parse(cachedData));
         }
-        setLoading(false);
 
         const response = await fetch(
           "https://api.jikan.moe/v4/top/anime?filter=bypopularity"
@@ -51,17 +61,15 @@ function Explore() {
           gap: "20px", // Add gap between cards
         }}
       >
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          topAnime.map((anime, index) => (
-            <Card
-              key={index}
-              image={anime.images.jpg.image_url}
-              name={anime.title}
-            />
-          ))
-        )}
+        {topAnime.map((anime, index) => (
+          <Card
+            key={index}
+            image={anime.images.jpg.image_url}
+            name={anime.title}
+            onClick={() => openModal(anime)}
+          />
+        ))}
+        {isModalOpen && <Modal anime={selectedAnime} onClose={closeModal} />}
       </div>
     </div>
   );
