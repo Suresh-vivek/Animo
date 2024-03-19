@@ -19,7 +19,6 @@
   left: 50%; /* Center it horizontally */
   transform: translateX(-50%); /* Center it horizontally */
   background-color: rgba(20, 25, 31, 1);
-  /*background-color: #262A2F;*/
   width: 100%; /* Adjust width */
   max-width: 1676px; /* Add max-width for responsiveness */
   height: 150px; /* Reduce height */
@@ -66,13 +65,11 @@
 }
 .explore {
   background: rgba(20, 25, 31, 1);
-  padding: 10px 30px;
   margin-top: 150px;
-  margin-left: 60px;
   margin-right: 150px;
   display: flex;
   justify-content: center;
-  gap: 20px; /* Add gap between cards */
+  gap: 20px;
   width: 100%;
   overflow-x: hidden;
 }
@@ -107,33 +104,24 @@ h1 {
   font-size: 24px;
   color: white;
 }
-.info {
-  position: fixed;
-  background-color: rgba(20, 25, 31, 1);
-  height: 920px;
-  width: 358px;
-  top: 150px; /* Adjust top position based on the height of the search div */
-  left: calc(
-    50% + 450px
-  ); /* Adjust left position to position it to the right of the explore section */
-}
+
 .carousel-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
 }
 
 .carousel {
   overflow: hidden;
   max-width: 1200px; /* Adjust maximum width as needed */
   width: 100%;
-  position: absolute;
+  /* position: absolute; */
   background-color: rgba(20, 25, 31, 1);
-  padding: 20px 30px; /* Add padding for spacing */
+  /* padding: 20px 30px; Add padding for spacing */
   border-radius: 10px;
   left: 515px; /* Position the carousel starting from the sidebar's end */
   right: 160px; /* Leave margin on the right */
-  overflow-x: hidden;
 }
 
 .cards-container {
@@ -141,7 +129,7 @@ h1 {
   transition: transform 0.3s ease-in-out;
 }
 .navigation-buttons {
-  position: absolute;
+  /* position: absolute; */
   right: 400px; /* Adjust position as needed */
   top: 50%; /* Align to the middle of the carousel */
   display: flex;
