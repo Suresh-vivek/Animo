@@ -1,20 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Card from "./Card";
-import Modal from "./Modal";
 
 function Explore() {
   const [topAnime, setTopAnime] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [selectedAnime, setSelectedAnime] = useState(null);
-
-  const openModal = (anime) => {
-    setSelectedAnime(anime);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,10 +56,8 @@ function Explore() {
             key={index}
             image={anime.images.jpg.large_image_url}
             name={anime.title}
-            onClick={() => openModal(anime)}
           />
         ))}
-        {isModalOpen && <Modal anime={selectedAnime} onClose={closeModal} />}
       </div>
     </div>
   );
