@@ -34,7 +34,7 @@ function ExploreAiring() {
   return (
     <div
       className='explore'
-      style={{ overflowX: "hidden", overflowY: "auto", marginTop: "500px" }}
+      style={{ overflowX: "hidden", overflowY: "auto", marginTop: "200px" }}
     >
       <h1
         style={{
