@@ -28,6 +28,7 @@
   justify-content: center; /* Center items horizontally */
   align-items: center; /* Center items vertically */
   flex-direction: column; /* Align items vertically */
+  z-index: 1000;
 }
 
 .search .search-title {

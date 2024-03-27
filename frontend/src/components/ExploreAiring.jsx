@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Card from "./Card";
+import Modal from "./Model";
 
 function ExploreAiring() {
   const [topAiringAnime, setTopAiringAnime] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [selectedAnime, setSelectedAnime] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,9 +35,17 @@ function ExploreAiring() {
     fetchData();
   }, []);
 
+  const handleCardClick = (anime) => {
+    setSelectedAnime(anime);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
   return (
     <div
-      className='explore'
+      className="explore"
       style={{ overflowX: "hidden", overflowY: "auto", marginTop: "200px" }}
     >
       <h1
@@ -55,16 +67,21 @@ function ExploreAiring() {
           gap: "20px",
         }}
       >
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          topAiringAnime.map((anime, index) => (
-            <Card
-              key={index}
-              image={anime.images.jpg.image_url}
-              name={anime.title}
-            />
-          ))
+        {topAiringAnime.map((anime, index) => (
+          <Card
+            key={index}
+            image={anime.images.jpg.image_url}
+            name={anime.title}
+            onClick={() => handleCardClick(anime)}
+          />
+        ))}
+
+        {showModal && (
+          <Modal
+            animeInfo={selectedAnime}
+            isOpen={showModal}
+            closeModal={closeModal}
+          />
         )}
       </div>
     </div>

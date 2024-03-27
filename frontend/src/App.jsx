@@ -8,7 +8,11 @@ import ExploreAiring from "./components/ExploreAiring";
 function App() {
   return (
     <>
-      <SideBar />
+      <div>
+        {" "}
+        <SideBar />
+      </div>
+
       <div>
         <SearchBar />
       </div>

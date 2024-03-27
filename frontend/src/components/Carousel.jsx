@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Card from "./Card";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import Modal from "./Model";
 
 function Carousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [animeData, setAnimeData] = useState([]);
   const [loading, setLoading] = useState(true);
   const cardsPerSlide = 4;
+
+  const [selectedAnime, setSelectedAnime] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +38,14 @@ function Carousel() {
     fetchData();
   }, []);
 
+  const handleCardClick = (anime) => {
+    setSelectedAnime(anime);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
   const totalSlides = Math.ceil(animeData.length / cardsPerSlide);
 
   const goToNextSlide = () => {
@@ -51,8 +63,8 @@ function Carousel() {
   };
 
   return (
-    <div className='carousel-container'>
-      <div className='carousel'>
+    <div className="carousel-container">
+      <div className="carousel">
         <h1
           style={{
             fontFamily: "Inter",
@@ -63,7 +75,7 @@ function Carousel() {
         >
           Season Now
         </h1>
-        <div className='cards-container'>
+        <div className="cards-container">
           {loading ? (
             <p>Loading...</p>
           ) : (
@@ -72,11 +84,19 @@ function Carousel() {
                 key={index}
                 image={anime.images.jpg.large_image_url}
                 name={anime.title}
+                onClick={() => handleCardClick(anime)}
               />
             ))
           )}
+          {showModal && (
+            <Modal
+              animeInfo={selectedAnime}
+              isOpen={showModal}
+              closeModal={closeModal}
+            />
+          )}
         </div>
-        <div className='navigation-buttons'>
+        <div className="navigation-buttons">
           <button onClick={goToPrevSlide}>
             <FaArrowLeft />
           </button>

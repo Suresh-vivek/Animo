@@ -1,0 +1,179 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1200;
+}
+
+.modal-content {
+  background-color: rgb(54, 54, 56);
+  padding: 20px;
+  border-radius: 8px;
+  width: 85%;
+  height: 70%;
+  overflow-y: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 1300;
+}
+
+.modal-data {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+}
+.anime-image {
+  width: 30%;
+  height: 100%;
+}
+.anime-image img {
+  width: 90%;
+  height: 90%;
+  object-fit: cover;
+  margin-top: 25px;
+}
+
+.anime-detail {
+  width: 45%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.anime-title {
+  font-size: 45px;
+  color: white;
+  font-weight: bold;
+  margin-top: 20px;
+}
+.title-english {
+  font-size: 28px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: regular;
+}
+.anime-tags {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+}
+.rating {
+  color: #000000;
+  background-color: rgba(255, 255, 255);
+  height: 25px;
+  width: 50px;
+  text-align: center;
+  border-radius: 5px 0px 0px 5px;
+}
+
+.score {
+  color: #000000;
+  background-color: #ffdd95;
+  height: 25px;
+  width: 50px;
+  text-align: center;
+  margin-left: 3px;
+}
+
+.status {
+  color: #000000;
+  background-color: #b0e3af;
+  height: 25px;
+  width: 130px;
+  text-align: center;
+  margin-left: 3px;
+}
+
+.type {
+  color: rgba(255, 255, 255, 0.8);
+  margin-left: 10px;
+  height: 25px;
+  text-align: center;
+  margin-right: 12px;
+}
+
+.trailer {
+  width: 200px;
+  height: 60px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 18px;
+  background-color: #ffdd95;
+}
+.play {
+  font-size: 21px;
+
+  margin-right: 5px;
+}
+.watch-trailer {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.9);
+  font-weight: regular;
+}
+.synopsis {
+  margin-top: 20px;
+  color: white;
+  font-size: 16px;
+  font-weight: regular;
+  width: 90%;
+}
+
+.other-detail {
+  width: 25%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #424243;
+}
+
+.titles {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+}
+.values {
+  margin-left: 2px;
+  font-size: 16px;
+  font-weight: regular;
+  color: rgba(255, 255, 255, 0.6);
+  margin-left: 10px;
+}
+.details {
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
+.watch-studio {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: regular;
+}
+hr {
+  width: 95%;
+  margin-left: 5px;
+  margin-top: 5px;
+  border-color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 10px;
+}
+
+.genre {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.genre-item {
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 5px;
+  padding: 3px 8px;
+}

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Card from "./Card";
+import Modal from "./Model";
 
 function Explore() {
   const [topAnime, setTopAnime] = useState([]);
-
   const [selectedAnime, setSelectedAnime] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,8 +32,17 @@ function Explore() {
     fetchData();
   }, []);
 
+  const handleCardClick = (anime) => {
+    setSelectedAnime(anime);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   return (
-    <div className='explore' style={{ overflowX: "hidden", overflowY: "auto" }}>
+    <div className="explore" style={{ overflowX: "hidden", overflowY: "auto" }}>
       <h1
         style={{
           fontFamily: "Inter",
@@ -56,8 +66,16 @@ function Explore() {
             key={index}
             image={anime.images.jpg.large_image_url}
             name={anime.title}
+            onClick={() => handleCardClick(anime)}
           />
         ))}
+        {showModal && (
+          <Modal
+            animeInfo={selectedAnime}
+            isOpen={showModal}
+            closeModal={closeModal}
+          />
+        )}
       </div>
     </div>
   );

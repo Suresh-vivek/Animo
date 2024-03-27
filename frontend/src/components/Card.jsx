@@ -1,9 +1,15 @@
-function Card({ image, name }) {
+import React from "react";
+
+function Card({ image, name, onClick }) {
   return (
-    <div className='card' style={{ position: "relative", textAlign: "center" }}>
+    <div
+      className="card"
+      style={{ position: "relative", textAlign: "center" }}
+      onClick={onClick}
+    >
       <img
         src={image}
-        alt='Anime'
+        alt="Anime"
         style={{
           maxWidth: "100%",
           maxHeight: "100%",
