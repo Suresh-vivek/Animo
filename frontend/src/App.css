@@ -42,28 +42,42 @@
   margin-top: 0px;
 }
 
-.search .search-bar {
+.search-bar {
   background-color: rgba(196, 196, 196, 0.1);
-  height: 35px; /* Reduce height */
+  height: 35px;
   border-radius: 5px;
-  width: 80%; /* Adjust width */
-  max-width: 800px; /* Add max-width for responsiveness */
-  margin-top: 0px; /* Adjust margin top to fit search title */
+  width: calc(100% - 120px); /* Adjust width to leave space for the button */
+  max-width: 800px;
+  margin-top: 0px;
+  display: flex; /* Use flexbox to align items */
+  align-items: center; /* Center items vertically */
 }
 
-.search .search-input {
+.search-input {
   background: transparent;
   border: none;
   outline: none;
-  margin-top: 0px; /* Reduce margin top */
-  margin-left: 10px; /* Adjust margin left */
-  font-size: 18px; /* Reduce font size */
+  margin-left: 10px;
+  font-size: 18px;
   font-family: "Inter", sans-serif;
-  font-optical-sizing: auto;
   font-weight: 400;
-  font-style: normal;
-  width: calc(100% - 20px); /* Adjust width */
+  width: 100%; /* Take up remaining space */
 }
+
+.search-button {
+  background-color: #ff781f; /* Set background color */
+  color: #fff; /* Set text color */
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px; /* Add padding */
+  cursor: pointer;
+  margin-left: 10px; /* Add margin to the left */
+}
+
+.search-button:hover {
+  background-color: #e06200; /* Change background color on hover */
+}
+
 .explore {
   background: rgba(20, 25, 31, 1);
   margin-top: 150px;
@@ -159,4 +173,42 @@ h1 {
 
 .navigation-buttons button:focus {
   outline: none; /* Remove focus outline */
+}
+.search-dropdown {
+  position: absolute; /* Position dropdown absolutely */
+  top: calc(100% + 10px); /* Place dropdown below the input */
+  left: 50%; /* Center dropdown horizontally */
+  transform: translateX(-50%); /* Center dropdown horizontally */
+  z-index: 1000; /* Ensure dropdown is above other elements */
+  background-color: rgba(196, 196, 196, 0.1); /* Set background color */
+  border-radius: 5px; /* Add border radius */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow */
+  max-height: 200px; /* Limit dropdown height */
+  overflow-y: auto; /* Enable vertical scrolling if needed */
+}
+
+.dropdown-item {
+  padding: 8px 12px; /* Add padding to dropdown items */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  display: flex; /* Use flexbox layout */
+  align-items: center; /* Align items vertically */
+  color: white; /* Set text color to white */
+}
+
+.dropdown-item:hover {
+  background-color: #ff781f; /* Change background color on hover */
+}
+
+.dropdown-item-image {
+  width: 40px; /* Set width of image */
+  height: 40px; /* Set height of image */
+  margin-right: 12px; /* Add space between image and title */
+  border-radius: 4px; /* Add border radius to image */
+}
+
+.dropdown-item-title {
+  flex: 1; /* Allow title to expand to fill remaining space */
+  white-space: nowrap; /* Prevent title from wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Show ellipsis for overflowing text */
 }
