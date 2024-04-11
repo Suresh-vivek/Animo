@@ -16,6 +16,27 @@ function Modal({ isOpen, closeModal, animeInfo }) {
           throw new Error("Failed to send anime info to backend");
         }
         // Handle success response if needed
+        // Call the second fetch function here
+        sendMalIdToRecommend(animeInfo);
+      })
+      .catch((error) => {
+        console.error("Error sending anime info to backend:", error);
+      });
+  };
+
+  const sendMalIdToRecommend = (animeInfo) => {
+    fetch("http://127.0.0.1:8000/recommend-anime", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ animeInfo }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to send anime info to backend");
+        }
+        // Handle success response if needed
       })
       .catch((error) => {
         console.error("Error sending anime info to backend:", error);

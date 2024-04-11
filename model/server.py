@@ -7,6 +7,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from scipy.sparse import hstack
 from sklearn.preprocessing import MinMaxScaler
+import pickle
 
 
 df = pd.read_csv("anime_with_synopsis.csv")
@@ -34,8 +35,12 @@ combined_similarity = cosine_similarity(combined_matrix)
 
 # Display the cosine similarity matrix for combined features
 combined_similarity_df = pd.DataFrame(combined_similarity, index=df['Name'], columns=df['Name'])
+# with open('combined_similarity.pkl', 'wb') as f:
+    # pickle.dump(combined_similarity_df, f)
+
 print("Cosine Similarity Matrix for Combined Features (Synopsis and Genres):")
-# print(combined_similarity_df.tail(10))
+print(combined_similarity_df.tail(10))
+
 def recommend_anime(anime_name, similarity_matrix, df, num_recommendations=5):
     idx = df[df['Name'] == anime_name].index[0]
     sim_scores = list(enumerate(similarity_matrix[idx]))
