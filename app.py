@@ -1,6 +1,6 @@
 import httpx
 
-api_url = 'https://api.jikan.moe/v4/anime'
+api_url = 'https://api.jikan.moe/v4/search/anime?q=Naruto'
 
 # Synchronous request using httpx.Client()
 with httpx.Client() as client:
