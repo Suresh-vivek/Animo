@@ -1,12 +1,18 @@
+// SideBar.js
+import React from "react";
+import { Link } from "react-router-dom";
+
 function SideBar() {
   return (
     <div className='sidebar'>
       <div style={{ paddingBottom: "10px" }}>
-        <a>Home</a>
+        <Link to='/'>Home</Link>
       </div>
-
       <div>
-        <a>Watchlist</a>
+        <Link to='/watchlist'>Watchlist</Link>
+      </div>
+      <div>
+        <Link to='/for-you'>For You</Link>
       </div>
     </div>
   );
