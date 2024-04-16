@@ -1,8 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./modal.css";
 import play from "../assets/play.svg";
-
+import { BiHeart } from "react-icons/bi";
+import { WatchlistContext } from "../contexts/Watchlistcontext";
 function Modal({ isOpen, closeModal, animeInfo }) {
+  const [heartClicked, setHeartClicked] = useState(false);
+  const { addToWatchlist, removeFromWatchlist } = useContext(WatchlistContext);
   const sendMalIdToBackend = (animeInfo) => {
     fetch("http://127.0.0.1:8000/fetch-anime", {
       method: "POST",
@@ -71,6 +74,25 @@ function Modal({ isOpen, closeModal, animeInfo }) {
     return genres.map((genre) => genre.name);
   }
 
+  const handleHeartClick = () => {
+    const newHeartClicked = !heartClicked;
+    setHeartClicked(newHeartClicked);
+    sessionStorage.setItem("heartClicked", JSON.stringify(newHeartClicked));
+    if (newHeartClicked) {
+      addToWatchlist(animeInfo);
+    }
+    if (!newHeartClicked) {
+      removeFromWatchlist(animeInfo.mal_id);
+    }
+  };
+
+  useEffect(() => {
+    const initialHeartClicked = sessionStorage.getItem("heartClicked");
+    if (initialHeartClicked !== null) {
+      setHeartClicked(JSON.parse(initialHeartClicked));
+    }
+  }, []);
+
   return (
     <div className='modal-overlay' onClick={handleOverlayClick}>
       <div className='modal-content' onClick={(e) => e.stopPropagation()}>
@@ -82,7 +104,13 @@ function Modal({ isOpen, closeModal, animeInfo }) {
 
           {/*ANime Details */}
           <div className='anime-detail'>
-            <div className='anime-title'>{animeInfo.title}</div>
+            <div className='anime-title'>
+              {animeInfo.title}
+              <BiHeart
+                onClick={handleHeartClick}
+                className={heartClicked ? "heart-red bounce" : "heart"}
+              />
+            </div>
 
             <div className='anime-tags'>
               <div className='rating'>{extractRating(animeInfo.rating)}</div>
@@ -132,7 +160,6 @@ function Modal({ isOpen, closeModal, animeInfo }) {
             <div className='details'>
               <span className='titles'>Premiered: </span>
               <span className='values'>
-                {" "}
                 {animeInfo.season} {animeInfo.year}
               </span>
             </div>

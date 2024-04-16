@@ -212,3 +212,25 @@ h1 {
   overflow: hidden; /* Hide overflowing text */
   text-overflow: ellipsis; /* Show ellipsis for overflowing text */
 }
+.heart-red {
+  color: red;
+}
+
+.bounce {
+  animation: bounce 0.5s;
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.heart {
+  color: white;
+}
