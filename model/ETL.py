@@ -14,6 +14,7 @@ from sklearn.preprocessing import MinMaxScaler
 app = Flask(__name__)
 CORS(app,resources={r"/*": {"origins": "*"}})
 # Define endpoint to receive malId
+
 @app.route('/fetch-anime', methods=['POST'])
 def fetch_anime():
     anime_info = request.json.get('animeInfo')
@@ -37,6 +38,8 @@ def fetch_anime():
         # Load transformed data into CSV
         load_into_csv(transformed_data)
         print("loaded")
+        create_matrix()
+        print("added to similarity matrix")
 
         return jsonify({"message": "Anime data fetched, transformed, and loaded into CSV"}), 200
     except Exception as e:
@@ -89,9 +92,29 @@ def load_into_csv(data):
         if csv_file.tell() == 0:
             csv_writer.writeheader()
         csv_writer.writerow(data)
+def create_matrix():
+    df = pd.read_csv("anime_with_synopsis.csv")
+    df['Score'].fillna('Unknown', inplace=True)
+    df['Score'] = pd.to_numeric(df['Score'], errors='coerce')
+    imputer = SimpleImputer(strategy='median')
+    df['Score'] = imputer.fit_transform(df[['Score']])
 
+    scaler = MinMaxScaler()
+    numeric_scores_normalized = scaler.fit_transform(df['Score'].values.reshape(-1, 1))
 
-# anime_name, similarity_matrix, df, num_recommendations=5
+    synopsis_vectorizer = TfidfVectorizer(stop_words='english')
+    synopsis_matrix = synopsis_vectorizer.fit_transform(df['Synopsis'].fillna(''))
+
+    genres_vectorizer = TfidfVectorizer(stop_words='english')
+    genres_matrix = genres_vectorizer.fit_transform(df['Genres'])
+
+    combined_matrix = hstack([synopsis_matrix, genres_matrix,numeric_scores_normalized])
+
+    combined_similarity = cosine_similarity(combined_matrix)
+
+    combined_similarity_df = pd.DataFrame(combined_similarity, index=df['Name'], columns=df['Name'])
+    
+
 
 @app.route('/recommend-anime',methods =["POST"])
 def give_recommendations():
@@ -121,21 +144,28 @@ def give_recommendations():
 
     # Display the cosine similarity matrix for combined features
     combined_similarity_df = pd.DataFrame(combined_similarity, index=df['Name'], columns=df['Name'])
-    # with open('combined_similarity.pkl', 'wb') as f:
-        # pickle.dump(combined_similarity_df, f)
-
-    print("Cosine Similarity Matrix for Combined Features (Synopsis and Genres):")
-    print(combined_similarity_df.tail(10))
-
-    def recommend_anime(anime_name, similarity_matrix, df, num_recommendations=5):
+    recommend_anime(anime_info['data']['title'],combined_similarity_df,df,5)
+@app.route('/for-you', methods=["POST"])
+def build_for_you():
+    # Get the watchlist from the request
+    watchlist = request.json.get('watchlist')
+    
+    # Generate recommendations for each anime in the watchlist
+    all_recommendations = {}
+    for anime in watchlist:
+        anime_name = anime.get('title')
+        recommendations = recommend_anime(anime_name, similarity_matrix, df)
+        all_recommendations[anime_name] = recommendations
+    
+    # Send the recommendations to the frontend
+    return  jsonify(all_recommendations)
+def recommend_anime(anime_name, similarity_matrix, df, num_recommendations=5):
         idx = df[df['Name'] == anime_name].index[0]
         sim_scores = list(enumerate(similarity_matrix[idx]))
         sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
         sim_scores = sim_scores[1:num_recommendations + 1]
         recommendations = [df['Name'][i[0]] for i in sim_scores]
         return recommendations
-    recommend_anime(anime_info['data']['title'],combined_similarity_df,df,5)
-
 
 if __name__ == '__main__':
     app.run(debug=True,port=8000)
