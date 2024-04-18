@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import requests
 import csv
+from heapq import nlargest
 import os
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
@@ -105,46 +106,35 @@ def create_matrix():
     synopsis_vectorizer = TfidfVectorizer(stop_words='english')
     synopsis_matrix = synopsis_vectorizer.fit_transform(df['Synopsis'].fillna(''))
 
+    # Create a TF-IDF vectorizer for genres
     genres_vectorizer = TfidfVectorizer(stop_words='english')
     genres_matrix = genres_vectorizer.fit_transform(df['Genres'])
 
-    combined_matrix = hstack([synopsis_matrix, genres_matrix,numeric_scores_normalized])
+    # Combine the TF-IDF matrices for synopses and genres
+    combined_matrix = hstack([synopsis_matrix, genres_matrix, numeric_scores_normalized])
 
+    # Calculate cosine similarity for combined features
     combined_similarity = cosine_similarity(combined_matrix)
 
-    combined_similarity_df = pd.DataFrame(combined_similarity, index=df['Name'], columns=df['Name'])
+    # Initialize an empty DataFrame to store the top 20 similar anime for each anime
+    top_20_similar_anime = pd.DataFrame(index=df['Name'], columns=range(20))
+
+    # Iterate through each anime and store the top 20 similar anime
+    for idx, anime_name in enumerate(df['Name']):
+        sim_scores = list(enumerate(combined_similarity[idx]))
+        sim_scores = nlargest(21, sim_scores, key=lambda x: x[1])  # Get top 20 similar anime
+        sim_scores = sim_scores[1:]  # Exclude the first anime (itself)
+        top_20_anime_names = [df.iloc[i[0]]['Name'] for i in sim_scores]
+        top_20_similar_anime.iloc[idx] = top_20_anime_names
+
+    top_20_similar_anime.to_csv("combined_similarity.csv")
     
 
 
 @app.route('/recommend-anime',methods =["POST"])
 def give_recommendations():
     anime_info = request.json.get('animeInfo')
-    df = pd.read_csv("anime_with_synopsis.csv")
-    df['Score'].fillna('Unknown', inplace=True)
-    df['Score'] = pd.to_numeric(df['Score'], errors='coerce')
-    imputer = SimpleImputer(strategy='median')
-    df['Score'] = imputer.fit_transform(df[['Score']])
-
-    scaler = MinMaxScaler()
-    numeric_scores_normalized = scaler.fit_transform(df['Score'].values.reshape(-1, 1))
-
-    synopsis_vectorizer = TfidfVectorizer(stop_words='english')
-    synopsis_matrix = synopsis_vectorizer.fit_transform(df['Synopsis'].fillna(''))
-
-    # Create a TF-IDF vectorizer for genres
-    genres_vectorizer = TfidfVectorizer(stop_words='english')
-    genres_matrix = genres_vectorizer.fit_transform(df['Genres'])
-
-    # Combine the TF-IDF matrices for synopses and genres
-    combined_matrix = hstack([synopsis_matrix, genres_matrix,numeric_scores_normalized])
-
-
-    # Calculate cosine similarity for combined features
-    combined_similarity = cosine_similarity(combined_matrix)
-
-    # Display the cosine similarity matrix for combined features
-    combined_similarity_df = pd.DataFrame(combined_similarity, index=df['Name'], columns=df['Name'])
-    recommend_anime(anime_info['data']['title'],combined_similarity_df,df,5)
+    recommend_anime(anime_info['data']['title'],5)
 @app.route('/for-you', methods=["POST"])
 def build_for_you():
     # Get the watchlist from the request
@@ -154,18 +144,20 @@ def build_for_you():
     all_recommendations = {}
     for anime in watchlist:
         anime_name = anime.get('title')
-        recommendations = recommend_anime(anime_name, similarity_matrix, df)
+        recommendations = recommend_anime(anime_name, 5)
         all_recommendations[anime_name] = recommendations
     
     # Send the recommendations to the frontend
     return  jsonify(all_recommendations)
-def recommend_anime(anime_name, similarity_matrix, df, num_recommendations=5):
-        idx = df[df['Name'] == anime_name].index[0]
-        sim_scores = list(enumerate(similarity_matrix[idx]))
-        sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-        sim_scores = sim_scores[1:num_recommendations + 1]
-        recommendations = [df['Name'][i[0]] for i in sim_scores]
-        return recommendations
+def recommend_anime(anime_name, num_recommendations=5):
+    combined_similarity_df = pd.read_csv("combined_similarity.csv", index_col=0)
+    idx = combined_similarity_df.index[combined_similarity_df.index == anime_name].tolist()[0]
+    sim_scores = combined_similarity_df.iloc[idx].sort_values(ascending=False)
+    sim_scores = sim_scores.iloc[1:]
+    
+    recommendations = sim_scores.head(num_recommendations).index.tolist()
+    
+    return recommendations
 
 if __name__ == '__main__':
     app.run(debug=True,port=8000)
