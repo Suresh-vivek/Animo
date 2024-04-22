@@ -6,6 +6,7 @@ import { WatchlistContext } from "../contexts/Watchlistcontext";
 function Modal({ isOpen, closeModal, animeInfo }) {
   const [heartClicked, setHeartClicked] = useState(false);
   const { addToWatchlist, removeFromWatchlist } = useContext(WatchlistContext);
+
   const sendMalIdToBackend = (animeInfo) => {
     fetch("http://127.0.0.1:8000/fetch-anime", {
       method: "POST",
@@ -39,7 +40,14 @@ function Modal({ isOpen, closeModal, animeInfo }) {
         if (!response.ok) {
           throw new Error("Failed to send anime info to backend");
         }
+        return response.json();
         // Handle success response if needed
+      })
+      .then((data) => {
+        console.log(data);
+        const recommendations = data.recommendations;
+        // Handle recommendations as needed
+        console.log(recommendations);
       })
       .catch((error) => {
         console.error("Error sending anime info to backend:", error);
@@ -49,6 +57,8 @@ function Modal({ isOpen, closeModal, animeInfo }) {
   // Call the function when the component mounts
   useEffect(() => {
     // Send mal_id to backend when component mounts
+    console.log("Component rendered");
+
     sendMalIdToBackend(animeInfo);
     console.log(animeInfo);
   }, [animeInfo]);

@@ -29,6 +29,10 @@ function Watchlist() {
         if (!response.ok) {
           throw new Error("Failed to send watch list to backend");
         }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data); // Log the response here
       })
       .catch((error) => {
         console.error("Error sending watch list to backend:", error);
