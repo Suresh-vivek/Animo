@@ -13,18 +13,20 @@ from scipy.sparse import hstack
 from sklearn.preprocessing import MinMaxScaler
 # from server import recommend_anime
 app = Flask(__name__)
-CORS(app,resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": "*"}}, allow_headers=["Content-Type"], methods=["GET", "POST"])
+
 # Define endpoint to receive malId
 
 @app.route('/fetch-anime', methods=['POST'])
 def fetch_anime():
     anime_info = request.json.get('animeInfo')
     mal_id = anime_info.get('mal_id')
+    
  
     # Check if malId already exists in CSV
     if check_mal_id_exists(mal_id):
-        return jsonify({"message": "Anime with given malId already exists"}), 400
-
+        return jsonify({"message": "Anime with given malId already exists"}), 200
+    
     try:
         # Fetch anime data from Jikan API
         anime_data = fetch_anime_data(mal_id)
@@ -51,7 +53,7 @@ def fetch_anime():
 def check_mal_id_exists(mal_id):
     if not os.path.exists('anime_with_synopsis.csv'):
         return False
-
+    print("checking")
     with open('anime_with_synopsis.csv', 'r',encoding='utf-8') as csv_file:
         csv_reader = csv.reader(csv_file)
         for row in csv_reader:
@@ -74,7 +76,7 @@ def transform_data(anime_data):
     title = anime_data['data']['title']
     score = anime_data['data']['score']
     genres = ", ".join(genre['name'] for genre in anime_data['data']['genres'])
-    synopsis = anime_data['data']['synopsis']
+    synopsis = anime_data['data']['synopsis'].replace('\n', '')
 
     # Creating a dictionary with the transformed data
     transformed_data = {
@@ -134,7 +136,9 @@ def create_matrix():
 @app.route('/recommend-anime',methods =["POST"])
 def give_recommendations():
     anime_info = request.json.get('animeInfo')
-    recommend_anime(anime_info['data']['title'],5)
+    recommendations=recommend_anime(anime_info['title'],5)
+    return jsonify({"recommendations": recommendations})
+
 @app.route('/for-you', methods=["POST"])
 def build_for_you():
     # Get the watchlist from the request
@@ -148,16 +152,49 @@ def build_for_you():
         all_recommendations[anime_name] = recommendations
     
     # Send the recommendations to the frontend
+    print(all_recommendations)
     return  jsonify(all_recommendations)
-def recommend_anime(anime_name, num_recommendations=5):
-    combined_similarity_df = pd.read_csv("combined_similarity.csv", index_col=0)
-    idx = combined_similarity_df.index[combined_similarity_df.index == anime_name].tolist()[0]
-    sim_scores = combined_similarity_df.iloc[idx].sort_values(ascending=False)
-    sim_scores = sim_scores.iloc[1:]
     
-    recommendations = sim_scores.head(num_recommendations).index.tolist()
+
+def recommend_anime(anime_name, num_recommendations=5):
+    # Read the CSV file into a DataFrame
+    combined_similarity_df = pd.read_csv("combined_similarity.csv")
+    anime_with_synopsis_df = pd.read_csv("anime_with_synopsis.csv")
+    
+    # Filter the DataFrame to get the row corresponding to the given anime_name
+    anime_row = combined_similarity_df[combined_similarity_df["Name"] == anime_name]
+    
+    # Check if anime_name exists in the dataset
+    if anime_row.empty:
+        print(f"Anime '{anime_name}' not found in the dataset.")
+        return None
+    
+    # Extract the recommended anime titles
+    recommended_titles = anime_row.iloc[:, 1:num_recommendations + 1].values.tolist()[0]
+    
+    # Create a list to store tuples of anime title and MAL_ID
+    recommendations = []
+    
+    # Iterate over recommended anime titles
+    for title in recommended_titles:
+        # Find the row corresponding to the recommended anime title in anime_with_synopsis_df
+        anime_info_row = anime_with_synopsis_df[anime_with_synopsis_df["Name"] == title]
+
+        # Get the MAL_ID of the recommended anime
+        mal_id = anime_info_row["MAL_ID"].values[0]
+        # Append a tuple of anime title and MAL_ID to the list
+        recommendations.append({"title": title, "MAL_ID": int(mal_id)})
     
     return recommendations
+
+
+# Example usage:
+anime_name = "Cowboy Bebop"
+num_recommendations = 5
+recommendations = recommend_anime(anime_name, num_recommendations)
+print(recommendations)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True,port=8000)
