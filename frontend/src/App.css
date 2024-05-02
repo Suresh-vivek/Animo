@@ -106,19 +106,6 @@
 h1 {
   font-size: 2.3em;
 }
-.sidebar {
-  position: fixed;
-  top: 150px; /* Adjust according to search div height */
-  left: 0;
-  width: 150px; /* Adjust width as needed */
-  height: calc(
-    100vh - 170px
-  ); /* Calculate height based on remaining viewport height */
-  background-color: rgba(20, 25, 31, 1);
-  padding: 30px 20px;
-  font-size: 24px;
-  color: white;
-}
 
 .carousel-container {
   display: flex;

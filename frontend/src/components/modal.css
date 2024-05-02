@@ -177,3 +177,27 @@ hr {
   border-radius: 5px;
   padding: 3px 8px;
 }
+
+.recommendation {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.recom-head {
+  font-size: 45px;
+  color: white;
+  font-weight: bold;
+  margin-top: 20px;
+}
+.recom-anime {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
