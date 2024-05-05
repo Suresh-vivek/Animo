@@ -11,6 +11,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from scipy.sparse import hstack
 from sklearn.preprocessing import MinMaxScaler
+from flask import Flask, jsonify, request
+from flask_cors import CORS
+
 # from server import recommend_anime
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}}, allow_headers=["Content-Type"], methods=["GET", "POST"])

@@ -8,6 +8,9 @@ from sklearn.metrics.pairwise import cosine_similarity
 from scipy.sparse import hstack
 from sklearn.preprocessing import MinMaxScaler
 import pickle
+from flask import Flask, jsonify, request
+from flask_cors import CORS
+
 
 
 df = pd.read_csv("anime_with_synopsis.csv")

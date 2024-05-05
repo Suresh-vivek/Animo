@@ -42,13 +42,18 @@ function Explore() {
   };
 
   return (
-    <div className="explore" style={{ overflowX: "hidden", overflowY: "auto" }}>
+    <div className="explore" style={{ overflowX: "hidden", overflowY: "auto" , display: "flex", flexDirection: "row" }}>
+      <div>
       <h1
         style={{
-          fontFamily: "Inter",
+          fontFamily: "Montserrat",
           fontWeight: 600,
           marginRight: "20px",
           marginBottom: "20px",
+          backgroundColor: "#323232",
+          width:"200px",
+          borderRadius: "10px",
+          padding: "10px",
         }}
       >
         Trending
@@ -59,6 +64,7 @@ function Explore() {
           display: "grid",
           gridTemplateColumns: "auto auto auto auto",
           gap: "20px",
+          marginTop: "30px",
         }}
       >
         {topAnime.map((anime, index) => (
@@ -76,6 +82,7 @@ function Explore() {
             closeModal={closeModal}
           />
         )}
+      </div>
       </div>
     </div>
   );

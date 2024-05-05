@@ -20,37 +20,43 @@
   transform: translateX(-50%); /* Center it horizontally */
   background-color: rgba(20, 25, 31, 1);
   width: 100%; /* Adjust width */
-  max-width: 1676px; /* Add max-width for responsiveness */
-  height: 150px; /* Reduce height */
+
+  height: 120px; /* Reduce height */
   padding: 20px; /* Add padding */
-  box-sizing: border-box; /* Include padding in the width/height calculation */
+  background-image: url(".//assets/Banner.png");
+  background-size: contain; /* Adjust background size */
+  background-position: center;
+
   display: flex; /* Use flexbox to align items */
   justify-content: center; /* Center items horizontally */
   align-items: center; /* Center items vertically */
   flex-direction: column; /* Align items vertically */
   z-index: 1000;
+  margin-bottom: 50px;
 }
 
 .search .search-title {
   text-align: center;
   font-size: 36px; /* Reduce font size */
-  font-family: "Sen", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 800;
+  font-family: "Montserrat", sans-serif;
+
+  font-weight: 700;
   font-style: normal;
   color: #fff; /* Set color to pearl white */
-  margin-top: 0px;
+  margin-top: 10px;
 }
 
 .search-bar {
-  background-color: rgba(196, 196, 196, 0.1);
-  height: 35px;
+  background-color: rgba(50, 50, 50, 1);
+
+  padding: 10px;
   border-radius: 5px;
   width: calc(100% - 120px); /* Adjust width to leave space for the button */
   max-width: 800px;
-  margin-top: 0px;
+
   display: flex; /* Use flexbox to align items */
   align-items: center; /* Center items vertically */
+  margin-bottom: 20px;
 }
 
 .search-input {
@@ -58,9 +64,10 @@
   border: none;
   outline: none;
   margin-left: 10px;
-  font-size: 18px;
-  font-family: "Inter", sans-serif;
-  font-weight: 400;
+  font-size: 22px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  color: #fff;
   width: 100%; /* Take up remaining space */
 }
 
@@ -98,6 +105,8 @@
   width: 180px; /* Reduce width of cards */
   height: 280px; /* Reduce height of cards */
   max-width: 250px;
+  font-size: "Montserrat", sans-serif;
+  font-weight: 500;
 }
 
 .card:hover {

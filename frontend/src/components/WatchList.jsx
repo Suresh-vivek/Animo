@@ -2,6 +2,7 @@ import { React, useState, useContext, useEffect } from "react";
 import Card from "./Card";
 import Modal from "./Model";
 import { WatchlistContext } from "../contexts/Watchlistcontext";
+import SearchBar from "./TopHeader";
 
 function Watchlist() {
   const { watchlist } = useContext(WatchlistContext);
@@ -31,9 +32,7 @@ function Watchlist() {
         }
         return response.json();
       })
-      .then((data) => {
-        console.log(data); // Log the response here
-      })
+      .then((data) => {})
       .catch((error) => {
         console.error("Error sending watch list to backend:", error);
       });
@@ -43,7 +42,9 @@ function Watchlist() {
   }, [watchlist]);
 
   return (
-    <div className='explore' style={{ overflowX: "hidden", overflowY: "auto" }}>
+    <div className="explore" style={{ overflowX: "hidden", overflowY: "auto" }}>
+      <SearchBar />
+
       <h1
         style={{
           fontFamily: "Inter",
@@ -60,6 +61,7 @@ function Watchlist() {
           display: "grid",
           gridTemplateColumns: "auto auto auto auto",
           gap: "20px",
+          marginTop: "20px",
         }}
       >
         {watchlist.map((anime, index) => (
